@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.files         = `git ls-files`.split($/) + [
     "LICENSE.txt",
-    "README.md",
+    "readme.md",
     #"CHANGELOG.md",
   ]
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

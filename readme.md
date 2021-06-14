@@ -12,7 +12,7 @@ class A
 		yield n
 		yield *rec(n-1)
 	end
-	rec = yield_from(:rec)
+	yield_from :rec
 end
 p A.new.rec(5).to_a # => [5, 4, 3, 2, 1, 0]
 ```

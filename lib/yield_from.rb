@@ -29,6 +29,7 @@ def yield_from(*funcsyms)
 			return to_enum(funcsym,*args) if !blk
 			func.(*args){|*a|a.each{|e|blk.(e)}}
 		}
+		private funcsym
 	}
 end
 
@@ -41,6 +42,6 @@ module YieldFrom
 				return to_enum(funcsym,*args) if !blk
 				func.bind(self).(*args){|*a|a.each{|e|blk.(e)}}
 			}
-		end
+		}
 	end
 end

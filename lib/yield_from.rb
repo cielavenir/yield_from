@@ -22,20 +22,24 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =end
 
-def yield_from(funcsym)
-    func = method(funcsym)
-    return define_method(funcsym){|*args,&blk|
-       return to_enum(funcsym,*args) if !blk
-       func.(*args){|*a|a.each{|e|blk.(e)}}
-    }
+def yield_from(*funcsyms)
+	funcsyms.each{|funcsym|
+		func = method(funcsym)
+		define_method(funcsym){|*args,&blk|
+			return to_enum(funcsym,*args) if !blk
+			func.(*args){|*a|a.each{|e|blk.(e)}}
+		}
+	}
 end
 
 module YieldFrom
-    def yield_from(funcsym)
-        func = instance_method(funcsym)
-        return define_method(funcsym){|*args,&blk|
-            return to_enum(funcsym,*args) if !blk
-            func.bind(self).(*args){|*a|a.each{|e|blk.(e)}}
-        }
-    end
+	def yield_from(*funcsyms)
+		funcsyms.each{|funcsym|
+			func = instance_method(funcsym)
+			define_method(funcsym){|*args,&blk|
+				return to_enum(funcsym,*args) if !blk
+				func.bind(self).(*args){|*a|a.each{|e|blk.(e)}}
+			}
+		end
+	end
 end

@@ -5,14 +5,14 @@
 ```
 require 'yield_from'
 class A
-    extend YieldFrom
-    def rec(n)
+	extend YieldFrom
+	def rec(n)
 		return to_enum(:rec,n) if !block_given?
-        return if n<0
+		return if n<0
 		yield n
-    	yield *rec(n-1)
-    end
-    rec = yield_from(:rec)
+		yield *rec(n-1)
+	end
+	rec = yield_from(:rec)
 end
 p A.new.rec(5).to_a # => [5, 4, 3, 2, 1, 0]
 ```
@@ -25,12 +25,12 @@ In the above example, similar code was running until **Ruby 2.7** .
 
 ```
 class A
-    def rec(n)
+	def rec(n)
 		return to_enum(:rec,n) if !block_given?
-        return if n<0
+		return if n<0
 		yield n
-    	rec(n-1, &proc)
-    end
+		rec(n-1, &proc)
+	end
 end
 p A.new.rec(5).to_a # => [5, 4, 3, 2, 1, 0]
 ```
